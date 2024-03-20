@@ -47,3 +47,7 @@ Replace `<COPYRIGHT>` with the copyright holder, e.g "Deutsche Telekom AG", and 
 **Add a new license text**
 
 Run `pipx run reuse download --all` to add license texts for all licenses detected in the project.
+
+# TODO:
+
+- Change License
