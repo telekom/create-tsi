@@ -34,7 +34,7 @@ async function generateContextData(
         ? "poetry run python app/engine/generate.py"
         : `${packageManager} run generate`,
     )}`;
-    const openAiKeyConfigured = openAiKey || process.env["OPENAI_API_KEY"];
+    const openAiKeyConfigured = openAiKey || process.env["TSI_API_KEY"];
     const llamaCloudKeyConfigured = useLlamaParse
       ? llamaCloudKey || process.env["LLAMA_CLOUD_API_KEY"]
       : true;
@@ -61,7 +61,7 @@ async function generateContextData(
 
     // generate the message of what to do to run the generate script manually
     const settings = [];
-    if (!openAiKeyConfigured) settings.push("your OpenAI key");
+    if (!openAiKeyConfigured) settings.push("your T-Systems key");
     if (!llamaCloudKeyConfigured) settings.push("your Llama Cloud key");
     if (hasVectorDb) settings.push("your Vector DB environment variables");
     const settingsMessage =

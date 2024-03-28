@@ -1,0 +1,61 @@
+/* Custom CSS for Telekom components. */
+
+/* Loader Component */
+.spinner__container {
+  height: 20px;
+  width: 20px;
+  text-align: left;
+  align-items: center;
+  display: inline-flex;
+}
+
+.spinner__container .spinner__circle {
+  animation: 2s linear 0s infinite normal none running rotate;
+  z-index: 2;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.spinner__container .spinner__circle .path {
+  animation: 1.5s ease-in-out 0s infinite normal none running dash;
+  stroke: #e20074;
+}
+
+.spinner__container .spinner__circle-background {
+  animation: 2s linear 0s infinite normal none running rotate;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.spinner__container .spinner__circle-background .path {
+  stroke: #efeff0;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+/* Text Field Component */
+.text-field:hover {
+  border: hsla(0, 0%, 0%, 0.71);
+  background: hsla(0, 0%, 0%, 0.07);
+}

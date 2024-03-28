@@ -9,6 +9,7 @@ import { templatesDir } from "./dir";
 import { isPoetryAvailable, tryPoetryInstall } from "./poetry";
 import { Tool } from "./tools";
 import {
+  DbSourceConfig,
   InstallTemplateArgs,
   TemplateDataSource,
   TemplateVectorDB,
@@ -75,6 +76,16 @@ const getAdditionalDependencies = (
     dependencies.push({
       name: "llama-index-readers-web",
       version: "^0.1.6",
+    });
+  } else if (dataSourceType === "db") {
+    dependencies.push({
+      name: "llama-index-readers-database",
+      version: "^0.1.3",
+    });
+    dependencies.push({
+      name: "pymysql",
+      version: "^1.1.0",
+      extras: ["rsa"],
     });
   }
 
@@ -307,6 +318,20 @@ export const installPythonTemplate = async ({
       node.commentBefore = ` use_llama_parse: Use LlamaParse if \`true\`. Needs a \`LLAMA_CLOUD_API_KEY\` from https://cloud.llamaindex.ai set as environment variable`;
       loaderConfig.set("file", node);
     }
+
+    // DB loader config
+    const ds = dataSources.find((ds) => ds.type === "db");
+    if (ds !== undefined) {
+      const node = loaderConfig.createNode({
+        uri: (ds.config as DbSourceConfig).dbUri,
+        query: (ds.config as DbSourceConfig).query,
+      });
+      node.commentBefore = ` The configuration for the database loader.
+ uri: The URI for the database. E.g.: mysql+pymysql://user:password@localhost:3306/db.
+ query: The query to fetch data from the database. E.g.: SELECT * FROM table`;
+      loaderConfig.set("db", node);
+    }
+
     // Write loaders config
     if (Object.keys(loaderConfig).length > 0) {
       const loaderConfigPath = path.join(root, "config/loaders.yaml");

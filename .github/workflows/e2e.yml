@@ -52,7 +52,7 @@ jobs:
       - name: Run Playwright tests
         run: pnpm run e2e
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TSI_API_KEY: ${{ secrets.TSI_API_KEY }}
         working-directory: .
       - uses: actions/upload-artifact@v3
         if: always()

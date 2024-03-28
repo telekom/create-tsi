@@ -32,6 +32,29 @@ export const supportedTools: Tool[] = [
     supportedFrameworks: ["fastapi"],
   },
   {
+    display: "Brave Search (configuration required after installation)",
+    name: "brave_search.BraveSearchToolSpec",
+    config: {
+      api_key: "Your Brave search API key, see https://brave.com/search/api",
+    },
+    dependencies: [
+      {
+        name: "llama-index-tools-brave-search",
+        version: "0.1.0",
+      },
+    ],
+  },
+  {
+    display: "DuckDuckGo Search",
+    name: "duckduckgo.DuckDuckGoSearchToolSpec",
+    dependencies: [
+      {
+        name: "llama-index-tools-duckduckgo",
+        version: "0.1.0",
+      },
+    ],
+  },
+  {
     display: "Wikipedia",
     name: "wikipedia.WikipediaToolSpec",
     dependencies: [

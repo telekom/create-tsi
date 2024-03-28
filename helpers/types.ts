@@ -14,7 +14,7 @@ export type TemplateDataSource = {
   type: TemplateDataSourceType;
   config: TemplateDataSourceConfig;
 };
-export type TemplateDataSourceType = "file" | "web";
+export type TemplateDataSourceType = "file" | "web" | "db";
 export type TemplateObservability = "none" | "opentelemetry";
 // Config for both file and folder
 export type FileSourceConfig = {
@@ -25,8 +25,14 @@ export type WebSourceConfig = {
   prefix?: string;
   depth?: number;
 };
-
-export type TemplateDataSourceConfig = FileSourceConfig | WebSourceConfig;
+export type DbSourceConfig = {
+  dbUri?: string;
+  query?: string;
+};
+export type TemplateDataSourceConfig =
+  | FileSourceConfig
+  | WebSourceConfig
+  | DbSourceConfig;
 
 export type CommunityProjectConfig = {
   owner: string;

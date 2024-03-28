@@ -5,7 +5,12 @@ import { TemplateDataSource } from "./types";
 export const EXAMPLE_FILE: TemplateDataSource = {
   type: "file",
   config: {
-    path: path.join(templatesDir, "components", "data", "101.pdf"),
+    path: path.join(
+      templatesDir,
+      "components",
+      "data",
+      "open-telekom-cloud-technik-flyer-2022.pdf",
+    ),
   },
 };
 

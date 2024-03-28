@@ -207,7 +207,7 @@ const packageManager = !!program.useNpm
       : getPkgManager();
 
 async function run(): Promise<void> {
-  const conf = new Conf({ projectName: "create-llama" });
+  const conf = new Conf({ projectName: "create-tsi" });
 
   if (program.resetPreferences) {
     conf.clear();
@@ -347,13 +347,13 @@ async function notifyUpdate(): Promise<void> {
     if (res?.latest) {
       const updateMessage =
         packageManager === "yarn"
-          ? "yarn global add create-llama@latest"
+          ? "yarn global add create-tsi@latest"
           : packageManager === "pnpm"
-            ? "pnpm add -g create-llama@latest"
-            : "npm i -g create-llama@latest";
+            ? "pnpm add -g create-tsi@latest"
+            : "npm i -g create-tsi@latest";
 
       console.log(
-        yellow(bold("A new version of `create-llama` is available!")) +
+        yellow(bold("A new version of `create-tsi` is available!")) +
           "\n" +
           "You can update by running: " +
           cyan(updateMessage) +

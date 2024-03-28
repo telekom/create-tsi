@@ -1,6 +1,6 @@
-import { Loader2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 
+import Loader from "../telekom/loader";
 import ChatActions from "./chat-actions";
 import ChatMessage from "./chat-message";
 import { ChatHandler } from "./chat.interface";
@@ -45,7 +45,7 @@ export default function ChatMessages(
         ))}
         {isPending && (
           <div className="flex justify-center items-center pt-10">
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader />
           </div>
         )}
       </div>

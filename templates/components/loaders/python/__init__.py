@@ -5,6 +5,7 @@ import logging
 from typing import Dict
 from app.engine.loaders.file import FileLoaderConfig, get_file_documents
 from app.engine.loaders.web import WebLoaderConfig, get_web_documents
+from app.engine.loaders.db import DBLoaderConfig, get_db_documents
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +28,9 @@ def get_documents():
             documents.extend(document)
         elif loader_type == "web":
             document = get_web_documents(WebLoaderConfig(**loader_config))
+            documents.extend(document)
+        elif loader_type == "db":
+            document = get_db_documents(DBLoaderConfig(**loader_config))
             documents.extend(document)
 
     return documents

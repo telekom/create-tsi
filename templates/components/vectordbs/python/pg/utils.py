@@ -24,4 +24,5 @@ def init_pg_vector_store_from_env():
         async_connection_string=async_conn_string,
         schema_name=PGVECTOR_SCHEMA,
         table_name=PGVECTOR_TABLE,
+        embed_dim=768,
     )

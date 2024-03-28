@@ -2,7 +2,14 @@ import os
 from typing import Dict
 from llama_index.core.settings import Settings
 from llama_index.llms.openai import OpenAI
+from llama_index.llms.openai_like import OpenAILike
 from llama_index.embeddings.openai import OpenAIEmbedding
+
+
+class TSIEmbedding(OpenAIEmbedding):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._query_engine = self._text_engine = self.model_name
 
 
 def llm_config_from_env() -> Dict:
@@ -11,9 +18,13 @@ def llm_config_from_env() -> Dict:
     model = os.getenv("MODEL")
     temperature = os.getenv("LLM_TEMPERATURE", DEFAULT_TEMPERATURE)
     max_tokens = os.getenv("LLM_MAX_TOKENS")
+    api_key = os.getenv("TSI_API_KEY")
+    api_base = os.getenv("TSI_API_BASE_URL")
 
     config = {
         "model": model,
+        "api_key": api_key,
+        "api_base": api_base,
         "temperature": float(temperature),
         "max_tokens": int(max_tokens) if max_tokens is not None else None,
     }
@@ -23,10 +34,14 @@ def llm_config_from_env() -> Dict:
 def embedding_config_from_env() -> Dict:
     model = os.getenv("EMBEDDING_MODEL")
     dimension = os.getenv("EMBEDDING_DIM")
+    api_key = os.getenv("TSI_API_KEY")
+    api_base = os.getenv("TSI_EMBED_API_BASE_URL")
 
     config = {
-        "model": model,
+        "model_name": model,
         "dimension": int(dimension) if dimension is not None else None,
+        "api_key": api_key,
+        "api_base": api_base,
     }
     return config
 
@@ -35,7 +50,12 @@ def init_settings():
     llm_configs = llm_config_from_env()
     embedding_configs = embedding_config_from_env()
 
-    Settings.llm = OpenAI(**llm_configs)
-    Settings.embed_model = OpenAIEmbedding(**embedding_configs)
+    Settings.embed_model = TSIEmbedding(**embedding_configs)
+    Settings.llm = OpenAILike(
+        **llm_configs,
+        is_chat_model=True,
+        is_function_calling_model=False,
+        context_window=4096,
+    )
     Settings.chunk_size = int(os.getenv("CHUNK_SIZE", "1024"))
     Settings.chunk_overlap = int(os.getenv("CHUNK_OVERLAP", "20"))

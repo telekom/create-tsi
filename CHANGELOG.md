@@ -1,4 +1,13 @@
-# create-llama
+# create-tsi
+
+## 0.0.16
+
+### Patch Changes
+
+- ce2f24d: Update loaders and tools config to yaml format
+- e8db041: Let user select multiple datasources (URLs, files and folders)
+- 78ded9e: Add Dockerfile template
+- 99e758f: Merge non-streaming and streaming template to one
 
 ## 0.0.31
 

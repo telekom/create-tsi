@@ -12,8 +12,8 @@ import {
 } from "../helpers";
 
 export type AppType = "--frontend" | "--no-frontend" | "";
-const MODEL = "gpt-3.5-turbo";
-const EMBEDDING_MODEL = "text-embedding-ada-002";
+const MODEL = "Llama2-70b-Instruct";
+const EMBEDDING_MODEL = "paraphrase-multilingual-mpnet-base-v2";
 export type CreateLlamaResult = {
   projectName: string;
   appProcess: ChildProcess;
@@ -74,8 +74,8 @@ export async function runCreateLlama(
   externalPort: number,
   postInstallAction: TemplatePostInstallAction,
 ): Promise<CreateLlamaResult> {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error("Setting OPENAI_API_KEY is mandatory to run tests");
+  if (!process.env.TSI_API_KEY) {
+    throw new Error("Setting TSI_API_KEY is mandatory to run tests");
   }
   const name = [
     templateType,
@@ -85,7 +85,7 @@ export async function runCreateLlama(
     appType,
   ].join("-");
   const command = [
-    "create-llama",
+    "create-tsi",
     name,
     "--template",
     templateType,
@@ -101,7 +101,7 @@ export async function runCreateLlama(
     "--embedding-model",
     EMBEDDING_MODEL,
     "--open-ai-key",
-    process.env.OPENAI_API_KEY,
+    process.env.TSI_API_KEY,
     appType,
     "--use-pnpm",
     "--port",
@@ -113,7 +113,6 @@ export async function runCreateLlama(
     "--tools",
     "none",
     "--no-llama-parse",
-    "--observability",
     "none",
   ].join(" ");
   console.log(`running command '${command}' in ${cwd}`);

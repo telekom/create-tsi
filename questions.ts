@@ -12,14 +12,11 @@ import {
   TemplateDataSourceType,
   TemplateFramework,
 } from "./helpers";
-import { COMMUNITY_OWNER, COMMUNITY_REPO } from "./helpers/constant";
 import { EXAMPLE_FILE } from "./helpers/datasources";
 import { templatesDir } from "./helpers/dir";
-import { getAvailableLlamapackOptions } from "./helpers/llama-pack";
-import { getProjectOptions } from "./helpers/repo";
 import { supportedTools, toolsRequireConfig } from "./helpers/tools";
 
-const OPENAI_API_URL = "https://api.openai.com/v1";
+const OPENAI_API_URL = "https://llm-server.llmhub.t-systems.net/v1";
 
 export type QuestionArgs = Omit<
   InstallAppArgs,
@@ -69,7 +66,9 @@ if ($dialogResult -eq [System.Windows.Forms.DialogResult]::OK)
 
 const defaults: QuestionArgs = {
   template: "streaming",
-  framework: "nextjs",
+  framework: "fastapi",
+  listServerModels: true,
+  observability: "none",
   ui: "shadcn",
   frontend: false,
   openAiKey: "",
@@ -159,6 +158,13 @@ export const getDataSourceChoices = (
       title: "Use website content (requires Chrome)",
       value: "web",
     });
+    // Add db source if there is no db source already
+    if (!selectedDataSource.some((ds) => ds.type === "db")) {
+      choices.push({
+        title: "Use data from a database (Mysql)",
+        value: "db",
+      });
+    }
   }
   return choices;
 };
@@ -232,26 +238,25 @@ const getAvailableModelChoices = async (
   listServerModels?: boolean,
 ) => {
   const defaultLLMModels = [
-    "gpt-3.5-turbo-0125",
-    "gpt-4-turbo-preview",
-    "gpt-4",
-    "gpt-4-vision-preview",
+    "Llama2-70b-Instruct",
+    "Mixtral-8x7B-Instruct-v0.1",
+    "Zephyr-7b-beta",
   ];
   const defaultEmbeddingModels = [
-    "text-embedding-ada-002",
-    "text-embedding-3-small",
-    "text-embedding-3-large",
+    "paraphrase-multilingual-mpnet-base-v2",
+    "jina-embeddings-v2-base-de",
+    "text-embedding-bge-m3",
   ];
-
-  const isLLMModels = (model_id: string) => {
-    return model_id.startsWith("gpt");
-  };
 
   const isEmbeddingModel = (model_id: string) => {
     return (
       model_id.includes("embedding") ||
       defaultEmbeddingModels.includes(model_id)
     );
+  };
+
+  const isLLMModels = (model_id: string) => {
+    return !isEmbeddingModel(model_id);
   };
 
   if (apiKey && listServerModels) {
@@ -281,7 +286,7 @@ const getAvailableModelChoices = async (
       if ((error as any).response?.statusCode === 401) {
         console.log(
           red(
-            "Invalid OpenAI API key provided! Please provide a valid key and try again!",
+            "Invalid T-Systems API key provided! Please provide a valid key and try again!",
           ),
         );
       } else {
@@ -328,7 +333,7 @@ export const askQuestions = async (
         ];
 
         const openAiKeyConfigured =
-          program.openAiKey || process.env["OPENAI_API_KEY"];
+          program.openAiKey || process.env["TSI_API_KEY"];
         // If using LlamaParse, require LlamaCloud API key
         const llamaCloudKeyConfigured = program.useLlamaParse
           ? program.llamaCloudKey || process.env["LLAMA_CLOUD_API_KEY"]
@@ -365,107 +370,9 @@ export const askQuestions = async (
     }
   }
 
-  if (!program.template) {
-    if (ciInfo.isCI) {
-      program.template = getPrefOrDefault("template");
-    } else {
-      const styledRepo = blue(
-        `https://github.com/${COMMUNITY_OWNER}/${COMMUNITY_REPO}`,
-      );
-      const { template } = await prompts(
-        {
-          type: "select",
-          name: "template",
-          message: "Which template would you like to use?",
-          choices: [
-            { title: "Chat", value: "streaming" },
-            {
-              title: `Community template from ${styledRepo}`,
-              value: "community",
-            },
-            {
-              title: "Example using a LlamaPack",
-              value: "llamapack",
-            },
-          ],
-          initial: 0,
-        },
-        handlers,
-      );
-      program.template = template;
-      preferences.template = template;
-    }
-  }
-
-  if (program.template === "community") {
-    const projectOptions = await getProjectOptions(
-      COMMUNITY_OWNER,
-      COMMUNITY_REPO,
-    );
-    const { communityProjectConfig } = await prompts(
-      {
-        type: "select",
-        name: "communityProjectConfig",
-        message: "Select community template",
-        choices: projectOptions.map(({ title, value }) => ({
-          title,
-          value: JSON.stringify(value), // serialize value to string in terminal
-        })),
-        initial: 0,
-      },
-      handlers,
-    );
-    const projectConfig = JSON.parse(communityProjectConfig);
-    program.communityProjectConfig = projectConfig;
-    preferences.communityProjectConfig = projectConfig;
-    return; // early return - no further questions needed for community projects
-  }
-
-  if (program.template === "llamapack") {
-    const availableLlamaPacks = await getAvailableLlamapackOptions();
-    const { llamapack } = await prompts(
-      {
-        type: "select",
-        name: "llamapack",
-        message: "Select LlamaPack",
-        choices: availableLlamaPacks.map((pack) => ({
-          title: pack.name,
-          value: pack.folderPath,
-        })),
-        initial: 0,
-      },
-      handlers,
-    );
-    program.llamapack = llamapack;
-    preferences.llamapack = llamapack;
-    await askPostInstallAction();
-    return; // early return - no further questions needed for llamapack projects
-  }
-
-  if (!program.framework) {
-    if (ciInfo.isCI) {
-      program.framework = getPrefOrDefault("framework");
-    } else {
-      const choices = [
-        { title: "NextJS", value: "nextjs" },
-        { title: "Express", value: "express" },
-        { title: "FastAPI (Python)", value: "fastapi" },
-      ];
-
-      const { framework } = await prompts(
-        {
-          type: "select",
-          name: "framework",
-          message: "Which framework would you like to use?",
-          choices,
-          initial: 0,
-        },
-        handlers,
-      );
-      program.framework = framework;
-      preferences.framework = framework;
-    }
-  }
+  program.template = getPrefOrDefault("template");
+  program.framework = getPrefOrDefault("framework");
+  program.listServerModels = getPrefOrDefault("listServerModels");
 
   if (program.framework === "express" || program.framework === "fastapi") {
     // if a backend-only framework is selected, ask whether we should create a frontend
@@ -499,36 +406,8 @@ export const askQuestions = async (
     program.frontend = false;
   }
 
-  if (program.framework === "nextjs" || program.frontend) {
-    if (!program.ui) {
-      program.ui = getPrefOrDefault("ui");
-    }
-  }
-
-  if (program.framework === "express" || program.framework === "nextjs") {
-    if (!program.observability) {
-      if (ciInfo.isCI) {
-        program.observability = getPrefOrDefault("observability");
-      } else {
-        const { observability } = await prompts(
-          {
-            type: "select",
-            name: "observability",
-            message: "Would you like to set up observability?",
-            choices: [
-              { title: "No", value: "none" },
-              { title: "OpenTelemetry", value: "opentelemetry" },
-            ],
-            initial: 0,
-          },
-          handlers,
-        );
-
-        program.observability = observability;
-        preferences.observability = observability;
-      }
-    }
-  }
+  program.ui = getPrefOrDefault("ui");
+  program.observability = getPrefOrDefault("observability");
 
   if (!program.openAiKey) {
     const { key } = await prompts(
@@ -536,14 +415,14 @@ export const askQuestions = async (
         type: "text",
         name: "key",
         message: program.listServerModels
-          ? "Please provide your OpenAI API key (or reuse OPENAI_API_KEY env variable):"
-          : "Please provide your OpenAI API key (leave blank to skip):",
+          ? "Please provide your T-Systems API key (or reuse TSI_API_KEY env variable):"
+          : "Please provide your T-Systems API key (leave blank to skip):",
         validate: (value: string) => {
           if (program.listServerModels && !value) {
-            if (process.env.OPENAI_API_KEY) {
+            if (process.env.TSI_API_KEY) {
               return true;
             }
-            return "OpenAI API key is required";
+            return "T-Systems API key is required";
           }
           return true;
         },
@@ -551,8 +430,8 @@ export const askQuestions = async (
       handlers,
     );
 
-    program.openAiKey = key || process.env.OPENAI_API_KEY;
-    preferences.openAiKey = key || process.env.OPENAI_API_KEY;
+    program.openAiKey = key || process.env.TSI_API_KEY;
+    preferences.openAiKey = key || process.env.TSI_API_KEY;
   }
 
   if (!program.model) {
@@ -674,6 +553,34 @@ export const askQuestions = async (
               prefix: baseUrl,
               depth: 1,
             },
+          });
+        } else if (selectedSource === "db") {
+          const dbPrompts: prompts.PromptObject<string>[] = [
+            {
+              type: "text",
+              name: "dbUri",
+              message:
+                "Please enter the connection string (URI) for the database:",
+              initial: "mysql+pymysql://user:pass@localhost:3306/mydb",
+              validate: (value: string) => {
+                if (!value) {
+                  return "Please provide a valid connection string";
+                } else if (!value.startsWith("mysql+pymysql://")) {
+                  return "The connection string must start with 'mysql+pymysql://'";
+                }
+                return true;
+              },
+            },
+            {
+              type: (prev) => (prev ? "text" : null),
+              name: "query",
+              message: "Please enter the SQL query to fetch data:",
+              initial: "SELECT * FROM mytable",
+            },
+          ];
+          program.dataSources.push({
+            type: "db",
+            config: await prompts(dbPrompts, handlers),
           });
         }
       }

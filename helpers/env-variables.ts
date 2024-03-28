@@ -122,9 +122,19 @@ export const createBackendEnvFile = async (
     },
     {
       render: true,
-      name: "OPENAI_API_KEY",
-      description: "The OpenAI API key to use.",
+      name: "TSI_API_KEY",
+      description: "The T-Systems API key to use.",
       value: opts.openAiKey,
+    },
+    {
+      name: "TSI_API_BASE_URL",
+      description: "The T-Systems API base URL.",
+      value: "https://llm-server.llmhub.t-systems.net/v1",
+    },
+    {
+      name: "TSI_EMBED_API_BASE_URL",
+      description: "The T-Systems embedding API base URL.",
+      value: "https://llm-server.llmhub.t-systems.net/v1",
     },
     {
       name: "LLAMA_CLOUD_API_KEY",

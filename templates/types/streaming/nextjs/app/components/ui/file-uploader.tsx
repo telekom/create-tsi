@@ -1,9 +1,10 @@
 "use client";
 
-import { Loader2, Paperclip } from "lucide-react";
+import { Paperclip } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import { buttonVariants } from "./button";
 import { cn } from "./lib/utils";
+import Loader from "./telekom/loader";
 
 export interface FileUploaderProps {
   config?: {
@@ -94,11 +95,7 @@ export default function FileUploader({
           uploading && "opacity-50",
         )}
       >
-        {uploading ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
-        ) : (
-          <Paperclip className="-rotate-45 w-4 h-4" />
-        )}
+        {uploading ? <Loader /> : <Paperclip className="-rotate-45 w-4 h-4" />}
       </label>
     </div>
   );

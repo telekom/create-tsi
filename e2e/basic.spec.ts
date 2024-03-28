@@ -67,7 +67,7 @@ for (const templateType of templateTypes) {
             test("Frontend should have a title", async ({ page }) => {
               test.skip(templatePostInstallAction !== "runApp");
               await page.goto(`http://localhost:${port}`);
-              await expect(page.getByText("Built by LlamaIndex")).toBeVisible();
+              await expect(page.getByText("Built by")).toBeVisible();
             });
 
             test("Frontend should be able to submit a message and receive a response", async ({
