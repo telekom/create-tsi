@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 import { useEffect, useRef } from "react";
 
 import Loader from "../telekom/loader";

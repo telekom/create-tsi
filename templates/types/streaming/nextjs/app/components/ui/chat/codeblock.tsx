@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 "use client";
 
 import { Check, Copy, Download } from "lucide-react";

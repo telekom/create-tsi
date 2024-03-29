@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 export default function Loader() {
   return (
     <div className="spinner__container">

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 import { useState } from "react";
 import { Button } from "../button";
 import FileUploader from "../file-uploader";

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 import path from "path";
 import { templatesDir } from "./dir";
 import { TemplateDataSource } from "./types";

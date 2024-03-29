@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+#
+# SPDX-License-Identifier: MIT
+
 name: Feature Request
 title: ""
 description: Write something like "Write an api endpoint that does "..." in the "..." file".

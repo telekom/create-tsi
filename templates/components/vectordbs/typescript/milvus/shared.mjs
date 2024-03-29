@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 import { MilvusClient } from "@zilliz/milvus2-sdk-node";
 
 export const CHUNK_SIZE = 512;

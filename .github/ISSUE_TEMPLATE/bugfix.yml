@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+#
+# SPDX-License-Identifier: MIT
+
 name: Bugfix
 title: ""
 description: Write something like "We notice ... behavior when ... happens instead of ..."

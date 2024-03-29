@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 export const COMMUNITY_OWNER = "run-llama";
 export const COMMUNITY_REPO = "create_llama_projects";
 export const LLAMA_PACK_OWNER = "run-llama";

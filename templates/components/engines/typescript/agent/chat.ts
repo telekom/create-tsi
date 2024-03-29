@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 import config from "@/config/tools.json";
 import { OpenAI, OpenAIAgent, QueryEngineTool, ToolFactory } from "llamaindex";
 import { STORAGE_CACHE_DIR } from "./constants.mjs";

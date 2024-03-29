@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+#
+# SPDX-License-Identifier: MIT
+
 # build dist/index.js file
 pnpm run build:ncc
 

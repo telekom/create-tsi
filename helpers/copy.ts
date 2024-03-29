@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 /* eslint-disable import/no-extraneous-dependencies */
 import { async as glob } from "fast-glob";
 import fs from "fs";

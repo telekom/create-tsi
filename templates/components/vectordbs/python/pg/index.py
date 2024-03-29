@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+#
+# SPDX-License-Identifier: MIT
+
 import logging
 from llama_index.core.indices.vector_store import VectorStoreIndex
 from app.engine.utils import init_pg_vector_store_from_env

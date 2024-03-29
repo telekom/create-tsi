@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 import { ChildProcess, exec } from "child_process";
 import crypto from "node:crypto";
 import { mkdir } from "node:fs/promises";

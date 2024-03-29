@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 export type PackageManager = "npm" | "pnpm" | "yarn";
 
 export function getPkgManager(): PackageManager {

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 import { JSONValue, Message } from "ai";
 
 export const isValidMessageData = (rawData: JSONValue | undefined) => {

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 import { ChildProcess, SpawnOptions, spawn } from "child_process";
 import path from "path";
 import { TemplateFramework } from "./types";

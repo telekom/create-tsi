@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+
+SPDX-License-Identifier: MIT
+-->
+
 # Create TSI
 
 `create-tsi` is a generative AI RAG toolkit that generates AI Applications using [LlamaIndex](https://www.llamaindex.ai/) with low code.
