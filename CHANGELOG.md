@@ -1,4 +1,9 @@
 <!--
+
+## 0.0.17
+### Patch Changes
+
+- 06fdd7f: Add support for LLM Hub v2
 SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
 
 SPDX-License-Identifier: MIT
