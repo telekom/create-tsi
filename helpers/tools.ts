@@ -47,6 +47,7 @@ export const supportedTools: Tool[] = [
         version: "0.1.0",
       },
     ],
+    supportedFrameworks: ["fastapi"],
   },
   {
     display: "DuckDuckGo Search",
@@ -57,6 +58,7 @@ export const supportedTools: Tool[] = [
         version: "0.1.0",
       },
     ],
+    supportedFrameworks: ["fastapi"],
   },
   {
     display: "Wikipedia",
