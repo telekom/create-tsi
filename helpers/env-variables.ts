@@ -133,12 +133,12 @@ export const createBackendEnvFile = async (
     {
       name: "TSI_API_BASE_URL",
       description: "The T-Systems API base URL.",
-      value: "https://llm-server.llmhub.t-systems.net/v1",
+      value: "https://llm-server.llmhub.t-systems.net/v2",
     },
     {
       name: "TSI_EMBED_API_BASE_URL",
       description: "The T-Systems embedding API base URL.",
-      value: "https://llm-server.llmhub.t-systems.net/v1",
+      value: "https://llm-server.llmhub.t-systems.net/v2",
     },
     {
       name: "LLAMA_CLOUD_API_KEY",

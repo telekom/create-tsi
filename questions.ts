@@ -20,7 +20,7 @@ import { EXAMPLE_FILE } from "./helpers/datasources";
 import { templatesDir } from "./helpers/dir";
 import { supportedTools, toolsRequireConfig } from "./helpers/tools";
 
-const OPENAI_API_URL = "https://llm-server.llmhub.t-systems.net/v1";
+const OPENAI_API_URL = "https://llm-server.llmhub.t-systems.net/v2";
 
 export type QuestionArgs = Omit<
   InstallAppArgs,
