@@ -7,6 +7,12 @@ SPDX-License-Identifier: MIT
 
 # create-tsi
 
+## 0.0.18
+
+### Patch Changes
+
+- ddbc80f: Fix missing brave and duckduckgo search tools
+
 ## 0.0.17
 
 ### Patch Changes
