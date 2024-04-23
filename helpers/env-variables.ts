@@ -150,6 +150,8 @@ export const createBackendEnvFile = async (
   ];
   let envVars: EnvVar[] = [];
   if (opts.framework === "fastapi") {
+    // TODO: select right dimension depending on the model
+    const defaultDimension = opts.model === "large-model" ? "1536" : "768";
     envVars = [
       ...defaultEnvs,
       ...[
@@ -171,6 +173,7 @@ export const createBackendEnvFile = async (
         {
           name: "EMBEDDING_DIM",
           description: "Dimension of the embedding model to use.",
+          value: defaultDimension,
         },
         {
           name: "LLM_TEMPERATURE",
