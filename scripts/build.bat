@@ -1,3 +1,7 @@
+REM SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+REM
+REM SPDX-License-Identifier: MIT
+
 @echo off
 
 rem Build dist/index.js file
