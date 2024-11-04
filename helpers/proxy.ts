@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Deutsche Telekom AG, LlamaIndex, Vercel, Inc.
+//
+// SPDX-License-Identifier: MIT
+
 /* Function to conditionally load the global-agent/bootstrap module */
 export async function initializeGlobalAgent() {
   if (process.env.GLOBAL_AGENT_HTTP_PROXY) {
